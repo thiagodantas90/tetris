@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         fun moveDown(){
             x++
         }
+        fun moveRight(){
+            y++
+        }
+
+
     }
 
 
@@ -72,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     //move peça atual
                     pt.moveDown()
+
                     //print peça
                     try {
                         boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
