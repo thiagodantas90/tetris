@@ -6,4 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".configuracao">
 
+    <TextView
+        android:id="@+id/Nivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.251"
+        tools:layout_editor_absoluteX="176dp" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="149dp"
+        android:layout_height="12dp"
+        android:layout_marginBottom="288dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="131dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

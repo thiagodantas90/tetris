@@ -10,8 +10,7 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
+import android.view.View
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         fun moveRight(){
             y++
         }
-
+        fun moveLeft(){
+            y--
+        }
 
     }
 
@@ -77,7 +78,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     //move peça atual
                     pt.moveDown()
-
+                    pt.moveRight()
+                    pt.moveLeft()
                     //print peça
                     try {
                         boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
