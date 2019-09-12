@@ -64,7 +64,12 @@ class MainActivity : AppCompatActivity() {
 
         gameRun()
     }
-
+    fun direta(v:View){
+        pt.moveRight()
+    }
+    fun esquerda(v:View){
+        pt.moveLeft()
+    }
     fun gameRun(){
         Thread{
             while(running){
@@ -78,8 +83,6 @@ class MainActivity : AppCompatActivity() {
                     }
                     //move peça atual
                     pt.moveDown()
-                    pt.moveRight()
-                    pt.moveLeft()
                     //print peça
                     try {
                         boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
