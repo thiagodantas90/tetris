@@ -11,6 +11,7 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     val COLUNA = 26
     var running = true
     var speed:Long = 300
+    var peca = 3
+    var cont = 0
 
     var pt = Ponto(0,15)
 
@@ -31,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         }
         fun moveLeft(){
             y--
+        }
+        fun gira(){
+
         }
 
     }
@@ -70,7 +76,11 @@ class MainActivity : AppCompatActivity() {
     fun esquerda(v:View){
         pt.moveLeft()
     }
+    fun girar(v:View){
+       cont++
+    }
     fun gameRun(){
+        //peca = Random.nextInt(1, 7)
         Thread{
             while(running){
                 Thread.sleep(speed)
@@ -84,11 +94,136 @@ class MainActivity : AppCompatActivity() {
                     //move peça atual
                     pt.moveDown()
                     //print peça
-                    try {
-                        boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                    }catch (e:ArrayIndexOutOfBoundsException ) {
-                        //se a peça passou das bordas eu vou parar o jogo
-                        running = false
+
+                    if(peca == 1){
+                        if(cont == 0){
+                            try {
+
+                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+
+
+                            }catch (e:ArrayIndexOutOfBoundsException ) {
+                                //se a peça passou das bordas eu vou parar o jogo
+//                                if(LINHA>36){
+//                                    board[pt.x][pt.y] = 1
+//                                    board[pt.x-1][pt.y] =  1
+//                                    board[pt.x][pt.y+1] =  1
+//                                    board[pt.x+1][pt.y] =  1
+//                                }
+                            }
+                        }else if (cont == 1){
+                            try {
+                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            }catch (e:ArrayIndexOutOfBoundsException ) {
+                                //se a peça passou das bordas eu vou parar o jogo
+                                running = false
+                            }
+                        }else if(cont == 2){
+                            try {
+                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            }catch (e:ArrayIndexOutOfBoundsException ) {
+                                //se a peça passou das bordas eu vou parar o jogo
+                                running = false
+                            }
+                        }else if(cont == 3){
+                            try {
+                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            }catch (e:ArrayIndexOutOfBoundsException ) {
+                                //se a peça passou das bordas eu vou parar o jogo
+                                running = false
+                            }
+                        }else if(cont == 4){
+                            cont = 0
+                        }
+                    }else if(peca == 2){
+                        try {
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
+                        }catch (e:ArrayIndexOutOfBoundsException ) {
+                            //se a peça passou das bordas eu vou parar o jogo
+                            running = false
+                        }
+
+                    }else if(peca == 3){
+                        if(cont == 0){
+                            try {
+                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x-1][pt.y-1]!!.setImageResource(R.drawable.white)
+                            }catch (e:ArrayIndexOutOfBoundsException ) {
+                                //se a peça passou das bordas eu vou parar o jogo
+                                running = false
+                            }
+                        }else if(cont == 1){
+                            try {
+                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                                boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
+                            }catch (e:ArrayIndexOutOfBoundsException ) {
+                                //se a peça passou das bordas eu vou parar o jogo
+                                running = false
+                            }
+                        }
+                        else if(cont == 2){
+                            cont = 0
+                        }
+
+                    }else if(peca == 4){
+                        try {
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-2]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                        }catch (e:ArrayIndexOutOfBoundsException ) {
+                            //se a peça passou das bordas eu vou parar o jogo
+                            running = false
+                        }
+                    }else if(peca == 5){
+                        try {
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
+                        }catch (e:ArrayIndexOutOfBoundsException ) {
+                            //se a peça passou das bordas eu vou parar o jogo
+                            running = false
+                        }
+                    }else if(peca == 6){
+                        try {
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x-1][pt.y-1]!!.setImageResource(R.drawable.white)
+                        }catch (e:ArrayIndexOutOfBoundsException ) {
+                            //se a peça passou das bordas eu vou parar o jogo
+                            running = false
+                        }
+                    }else if(peca == 7){
+                        try {
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y+1]!!.setImageResource(R.drawable.white)
+                        }catch (e:ArrayIndexOutOfBoundsException ) {
+                            //se a peça passou das bordas eu vou parar o jogo
+                            running = false
+                        }
                     }
 
                 }

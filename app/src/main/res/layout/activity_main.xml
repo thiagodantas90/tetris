@@ -5,27 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
+
 
     <GridLayout
         android:id="@+id/gridboard"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"/>
 
-        <Button
-            android:id="@+id/Esquerda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="esquerda"
-            android:text="Esquerda" />
 
-        <Button
-            android:id="@+id/Direita"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="direta"
-            android:text="Direita" />
+    <Button
+        android:id="@+id/Esquerda"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:onClick="esquerda"
+        android:text="Esquerda" />
+
+    <Button
+        android:id="@+id/Direita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="direta"
+        android:text="Direita" />
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="girar"
+        android:text="Girar" />
+
+
+
 
 </LinearLayout>
