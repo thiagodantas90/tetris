@@ -4,25 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".configuracao">
+    tools:context=".configuracao"
+    tools:layout_editor_absoluteY="81dp" >
 
-    <TextView
-        android:id="@+id/Nivel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.251"
-        tools:layout_editor_absoluteX="176dp"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="149dp"
-        android:layout_height="12dp"
-        android:layout_marginBottom="288dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="131dp"
-        tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/nivel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nivel"
+            android:textSize="36sp" />
+
+        <RadioGroup
+            android:id="@+id/grupoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="185dp"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:id="@+id/facil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Facil" />
+
+            <RadioButton
+                android:id="@+id/medio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Medio" />
+
+            <RadioButton
+                android:id="@+id/dificil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dificil" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/alterar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="altVelocidade"
+            android:text="ALTERAR" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

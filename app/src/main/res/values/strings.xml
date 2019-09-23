@@ -3,4 +3,18 @@
     <string name="novo_jogo">Novo Jogo</string>
     <string name="continuar">Continuar</string>
     <string name="configura_es">Configurações</string>
+    <string name="pausa">Pausa</string>
+    <string name="girar">Girar</string>
+    <string name="baixo">baixo</string>
+    <string name="direita">Direita</string>
+    <string name="esquerda">Esquerda</string>
+
+
+
+
+<string-array name="nivel">
+    <item>Facil</item>
+    <item>Medio</item>
+    <item>Dificil</item>
+</string-array>
 </resources>

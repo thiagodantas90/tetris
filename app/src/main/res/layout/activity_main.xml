@@ -13,35 +13,58 @@
         android:id="@+id/gridboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal">
+
+    </GridLayout>
 
 
-    <Button
-        android:id="@+id/Esquerda"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_weight="1"
-        android:onClick="esquerda"
-        android:text="Esquerda" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/Direita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="direta"
-        android:text="Direita" />
+        <Button
+            android:id="@+id/pausa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="pausa"
+            android:text="@string/pausa" />
+
+        <Button
+            android:id="@+id/gira"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="girar"
+            android:text="@string/girar" />
+
+        <Button
+            android:id="@+id/baixo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="cair"
+            android:text="@string/baixo" />
+
+        <Button
+            android:id="@+id/Direita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="direta"
+            android:text="@string/direita" />
+
+        <Button
+            android:id="@+id/Esquerda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="esquerda"
+            android:text="@string/esquerda" />
+    </LinearLayout><![CDATA[
+
+    />
 
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="girar"
-        android:text="Girar" />
-
-
-
-
+]]>
 </LinearLayout>
