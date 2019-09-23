@@ -35,10 +35,10 @@ class configuracao : AppCompatActivity() {
             }
         }
 
-        var i = Intent(this, telaInicial::class.java)
-        i.putExtra("resposta", speed.toString())
-        startActivity(i)
-        //setResult(Activity.RESULT_OK, i)
+        var i = Intent()
+        i.putExtra("resposta", speed)
+        //startActivity(i)
+        setResult(Activity.RESULT_OK, i)
         finish()
     }
 }

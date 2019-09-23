@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.PersistableBundle
 import android.view.View
+import android.widget.Toast
 import kotlin.random.Random
 
 
@@ -22,12 +23,11 @@ class MainActivity : AppCompatActivity() {
     var PREFS = toString()
     var recorde:Int=0
 
-
-
     val LINHA = 36
     val COLUNA = 26
     var running = true
     var speed:Long = 300
+
     var peca = 1
     var cont = 0
 
@@ -61,11 +61,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var param = intent.extras
-        if (param != null) {
-            speed = param.getInt("speed").toLong()
-        }
-
         //recuperando o recorde
         val settings = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         recorde = settings.getInt("Recorde",0)
@@ -97,42 +92,79 @@ class MainActivity : AppCompatActivity() {
        cont++
     }
     fun cair(v:View){
-        speed = 100
+        speed = 50
     }
     fun pausa(v:View){
 
     }
-
+    fun gerarPeca(){
+        peca = Random.nextInt(1, 7)
+    }
 
     fun gameRun(){
-
+        for(i in 0 until COLUNA){
+            board[35][i] = 1
+            boardView[35][i]!!.setImageResource(R.drawable.gray)
+        }
         Thread{
-            //peca = Random.nextInt(1, 7)
+            //speed  = 300
+
             while(running){
 
+
                 Thread.sleep(speed)
+
                 runOnUiThread{
                     //limpa tela
-                    for (i in 0 until LINHA) {
+                    for (i in 0 until LINHA-1) {
                         for (j in 0 until COLUNA) {
                             boardView[i][j]!!.setImageResource(R.drawable.black)
                         }
                     }
+                    //Colocar peças
+                    for (i in 0 until LINHA-1) {
+                        for (j in 0 until COLUNA) {
+                            if(board[i][j] == 1){
+                                boardView[i][j]!!.setImageResource(R.drawable.white)
+                            }
+                        }
+                    }
                     //move peça atual
+
                     pt.moveDown()
+
                     //print peça
                     if(peca == 1){
                         if(cont == 0){
                             try {
-
                                 boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
 
+                                if(board[pt.x+2][pt.y]==1)  {
+                                    board[pt.x][pt.y]=1
+                                    board[pt.x-1][pt.y]=1
+                                    board[pt.x][pt.y+1]=1
+                                    board[pt.x+1][pt.y]=1
+
+                                    running = true
+                                    gerarPeca()
+                                    pt = Ponto(0,15)
+                                }
 
                             }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
+//                                //se a peça passou das bordas eu vou parar o jogo
+//                                   if(board[pt.x+2][pt.y]==1)  {
+//                                       board[pt.x][pt.y]=1
+//                                       board[pt.x-1][pt.y]=1
+//                                       board[pt.x][pt.y+1]=1
+//                                       board[pt.x+1][pt.y]=1
+//
+//                                   }
+//                                running = true
+//                                gerarPeca()
+//                                pt = Ponto(0,15)
 
                             }
                         }else if (cont == 1){
@@ -141,9 +173,23 @@ class MainActivity : AppCompatActivity() {
                                 boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+
+                                if(board[pt.x+2][pt.y]==1)  {
+                                    boardView[pt.x][pt.y]
+                                    boardView[pt.x][pt.y-1]
+                                    boardView[pt.x][pt.y+1]
+                                    boardView[pt.x+1][pt.y]
+
+                                    running = true
+                                    gerarPeca()
+                                    pt = Ponto(0,15)
+                                }
+
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+//                                running = true
+//                                gerarPeca()
+//                                pt = Ponto(0,15)
                             }
                         }else if(cont == 2){
                             try {
@@ -154,6 +200,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 3){
                             try {
@@ -164,6 +212,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 4){
                             cont = 0
@@ -177,6 +227,8 @@ class MainActivity : AppCompatActivity() {
                         }catch (e:ArrayIndexOutOfBoundsException ) {
                             //se a peça passou das bordas eu vou parar o jogo
                             running = true
+                            gerarPeca()
+                            pt = Ponto(0,15)
                         }
 
                     }else if(peca == 3){
@@ -189,6 +241,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 1){
                             try {
@@ -199,6 +253,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }
                         else if(cont == 2){
@@ -215,6 +271,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 1){
                             try {
@@ -225,6 +283,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 2){
                             cont = 0
@@ -240,6 +300,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 1){
                             try {
@@ -250,6 +312,9 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
+
                             }
                         }else if(cont == 2){
                             try {
@@ -260,6 +325,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if ( cont == 3){
                             try {
@@ -270,6 +337,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 4){
                             cont = 0
@@ -285,6 +354,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont ==1){
                             try {
@@ -295,6 +366,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont ==2){
                             try {
@@ -305,6 +378,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 3){
                             try {
@@ -315,6 +390,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 4){
                             cont = 0
@@ -330,6 +407,8 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 1){
                             try {
@@ -340,12 +419,15 @@ class MainActivity : AppCompatActivity() {
                             }catch (e:ArrayIndexOutOfBoundsException ) {
                                 //se a peça passou das bordas eu vou parar o jogo
                                 running = true
+                                gerarPeca()
+                                pt = Ponto(0,15)
                             }
                         }else if(cont == 2){
                             cont = 0
                         }
 
                     }
+                    //
 
                 }
             }
