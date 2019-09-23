@@ -61,6 +61,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var param = intent.extras
+        if (param != null) {
+            speed = param.getInt("speed").toLong()
+        }
+
         //recuperando o recorde
         val settings = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         recorde = settings.getInt("Recorde",0)

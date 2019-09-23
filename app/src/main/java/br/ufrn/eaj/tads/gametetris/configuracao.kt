@@ -31,7 +31,7 @@ class configuracao : AppCompatActivity() {
                 }
             dificil.id->{
                 //Toast.makeText(this, "Dificil", Toast.LENGTH_SHORT).show()
-                speed = 75
+                speed = 1000
             }
         }
 
@@ -39,6 +39,6 @@ class configuracao : AppCompatActivity() {
         i.putExtra("resposta", speed.toString())
         startActivity(i)
         //setResult(Activity.RESULT_OK, i)
-        //finish()
+        finish()
     }
 }
