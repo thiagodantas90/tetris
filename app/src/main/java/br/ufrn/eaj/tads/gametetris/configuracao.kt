@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_configuracao.*
 import kotlinx.android.synthetic.main.activity_tela_inicial.*
+import java.nio.file.Files
 
 class configuracao : AppCompatActivity() {
 
@@ -44,10 +45,6 @@ class configuracao : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        val setting = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        with((setting.edit())){
-            putLong("Recorde", speed)
-            //putInt("pontos", null)
-        }
+
     }
 }

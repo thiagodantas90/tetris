@@ -21,7 +21,8 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
 
     var PREFS = toString()
-    var recorde:Int=0
+    var recorde:Long=0
+    var pontos:Long = 200
 
     val LINHA = 36
     val COLUNA = 26
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     var cont = 0
     var contL = 0
     var contJ= 0
+
     var pt = Ponto(0,15)
 
     inner class Ponto(var x:Int,var y:Int){
@@ -62,9 +64,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        //recuperando o recorde
-//        val settings = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-//        speed = settings.getLong("Recorde",0)
+        //recuperando o recorde
+        val settings = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+        recorde = settings.getLong("recorde", 0)
+        recordeId.text = recorde.toString()
 
         gridboard.rowCount = LINHA
         gridboard.columnCount = COLUNA
@@ -77,16 +81,19 @@ class MainActivity : AppCompatActivity() {
                 gridboard.addView( boardView[i][j])
             }
         }
-
         gameRun()
     }
 
 
     fun direta(v:View){
-        pt.moveRight()
+        if(pt.y<23){
+            pt.moveRight()
+        }
     }
     fun esquerda(v:View){
-        pt.moveLeft()
+        if(pt.y>1){
+            pt.moveLeft()
+        }
     }
     //gira a peça
     fun girar(v:View){
@@ -99,8 +106,9 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
     fun gerarPeca(){
-        //peca = Random.nextInt(1, 7)
+        peca = Random.nextInt(1, 7)
         pt = Ponto(0,15)
+        speed = 300
     }
 
     fun gameRun(){
@@ -108,9 +116,14 @@ class MainActivity : AppCompatActivity() {
             board[35][i] = 1
             boardView[35][i]!!.setImageResource(R.drawable.gray)
         }
+        for(i in 0 until LINHA-1){
+            board[i][0] = 1
+            board[i][25] = 1
+            boardView[i][0]!!.setImageResource(R.drawable.gray)
+            boardView[i][25]!!.setImageResource(R.drawable.gray)
+        }
         Thread{
             //speed  = 300
-
             while(running){
 
 
@@ -119,13 +132,13 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread{
                     //limpa tela
                     for (i in 0 until LINHA-1) {
-                        for (j in 0 until COLUNA) {
+                        for (j in 1 until COLUNA-1) {
                             boardView[i][j]!!.setImageResource(R.drawable.black)
                         }
                     }
                     //Colocar peças
                     for (i in 0 until LINHA-1) {
-                        for (j in 0 until COLUNA) {
+                        for (j in 1 until COLUNA-1) {
                             if(board[i][j] == 1){
                                 boardView[i][j]!!.setImageResource(R.drawable.white)
                             }
@@ -141,7 +154,8 @@ class MainActivity : AppCompatActivity() {
                             }
                             contJ = j
                         }
-                        if(contL == 26){
+                        if(contL == 19){
+                            pontos++
                             for(i in 0 until COLUNA){
                                 board[contJ][i] = 0
                             }
@@ -370,15 +384,17 @@ class MainActivity : AppCompatActivity() {
 
         cont = 0
     }
-//    override fun onStop() {
-//        super.onStop()
-//        val setting = getSharedPreferences(PREFS,Context.MODE_PRIVATE)
-//        with((setting.edit())){
-//            putInt("Recorde", recorde)
-//            //putInt("pontos", null)
-//        }
-//
-//    }
+    override fun onStop() {
+        super.onStop()
+        val setting = getSharedPreferences(PREFS,Context.MODE_PRIVATE)
+        var editor = setting.edit()
+//        editor.putLong("recorde", 125)
+//        editor.commit()
+        if(pontos>recorde){
+            editor.putLong("recorde", pontos)
+            editor.commit()
+        }
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
