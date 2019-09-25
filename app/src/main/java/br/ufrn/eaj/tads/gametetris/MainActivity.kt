@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                             for(i in 0 until COLUNA){
                                 board[contJ][i] = 0
                             }
-                            fazer teste pra descer as peças
+                            //fazer teste pra descer as peças
                         }
                     }
 
