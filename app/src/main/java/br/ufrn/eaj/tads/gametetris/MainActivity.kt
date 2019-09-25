@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     var peca = 7
     var cont = 0
-
+    var contL = 0
+    var contJ= 0
     var pt = Ponto(0,15)
 
     inner class Ponto(var x:Int,var y:Int){
@@ -130,6 +131,24 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
+
+                    //teste de linha
+
+                    for (i in 0 until LINHA-1) {
+                        for (j in 0 until COLUNA) {
+                            if(board[i][j] == 1){
+                                contL++
+                            }
+                            contJ = j
+                        }
+                        if(contL == 26){
+                            for(i in 0 until COLUNA){
+                                board[contJ][i] = 0
+                            }
+                            fazer teste pra descer as peças
+                        }
+                    }
+
                     //move peça atual
 
                     pt.moveDown()
