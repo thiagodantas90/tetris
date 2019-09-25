@@ -17,12 +17,6 @@ class telaInicial : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_inicial)
 
-//        var param = intent.extras
-//
-//        if (param!=null){
-//            speed = param.getInt("resposta")
-//        }
-
     }
 
     fun configurar(v: View) {
@@ -32,7 +26,6 @@ class telaInicial : AppCompatActivity() {
 
     fun novoJogo(v: View) {
         val i = Intent(this, MainActivity::class.java)
-        i.putExtra("speed", speed)
         startActivity(i)
     }
 
@@ -41,20 +34,4 @@ class telaInicial : AppCompatActivity() {
         startActivity(i)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Toast.makeText(this, "entrou", Toast.LENGTH_SHORT).show()
-        when(requestCode){
-            1->{
-                Toast.makeText(this, "Testeou", Toast.LENGTH_SHORT).show()
-                when(resultCode){
-                   RESULT_OK-> {
-                        speed = data?.getStringExtra("resposta")?.toInt()!!
-                        Toast.makeText(this, speed, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-
-    }
 }

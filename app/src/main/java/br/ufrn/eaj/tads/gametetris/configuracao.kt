@@ -1,6 +1,7 @@
 package br.ufrn.eaj.tads.gametetris
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,7 +12,9 @@ import kotlinx.android.synthetic.main.activity_tela_inicial.*
 
 class configuracao : AppCompatActivity() {
 
-    var speed:Int=0
+    var PREFS:String=toString()
+    var speed:Long=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configuracao)
@@ -31,14 +34,20 @@ class configuracao : AppCompatActivity() {
                 }
             dificil.id->{
                 //Toast.makeText(this, "Dificil", Toast.LENGTH_SHORT).show()
-                speed = 1000
+                speed = 75
             }
         }
-
-        var i = Intent()
-        i.putExtra("resposta", speed)
-        //startActivity(i)
-        setResult(Activity.RESULT_OK, i)
         finish()
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val setting = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        with((setting.edit())){
+            putLong("Recorde", speed)
+            //putInt("pontos", null)
+        }
     }
 }

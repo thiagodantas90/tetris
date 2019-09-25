@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     var running = true
     var speed:Long = 300
 
-    var peca = 1
+    var peca = 7
     var cont = 0
 
     var pt = Ponto(0,15)
@@ -61,9 +61,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //recuperando o recorde
-        val settings = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        recorde = settings.getInt("Recorde",0)
+//        //recuperando o recorde
+//        val settings = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+//        speed = settings.getLong("Recorde",0)
 
         gridboard.rowCount = LINHA
         gridboard.columnCount = COLUNA
@@ -95,10 +95,11 @@ class MainActivity : AppCompatActivity() {
         speed = 50
     }
     fun pausa(v:View){
-
+        finish()
     }
     fun gerarPeca(){
-        peca = Random.nextInt(1, 7)
+        //peca = Random.nextInt(1, 7)
+        pt = Ponto(0,15)
     }
 
     fun gameRun(){
@@ -136,125 +137,73 @@ class MainActivity : AppCompatActivity() {
                     //print peça
                     if(peca == 1){
                         if(cont == 0){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
 
-                                if(board[pt.x+2][pt.y]==1)  {
-                                    board[pt.x][pt.y]=1
-                                    board[pt.x-1][pt.y]=1
-                                    board[pt.x][pt.y+1]=1
-                                    board[pt.x+1][pt.y]=1
-
-                                    running = true
-                                    gerarPeca()
-                                    pt = Ponto(0,15)
-                                }
-
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-//                                //se a peça passou das bordas eu vou parar o jogo
-//                                   if(board[pt.x+2][pt.y]==1)  {
-//                                       board[pt.x][pt.y]=1
-//                                       board[pt.x-1][pt.y]=1
-//                                       board[pt.x][pt.y+1]=1
-//                                       board[pt.x+1][pt.y]=1
-//
-//                                   }
-//                                running = true
-//                                gerarPeca()
-//                                pt = Ponto(0,15)
-
+                            if(board[pt.x+2][pt.y]==1 || board[pt.x+1][pt.y+1]==1) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x - 1][pt.y] = 1
+                                board[pt.x][pt.y + 1] = 1
+                                board[pt.x + 1][pt.y] = 1
+                                gerarPeca()
                             }
                         }else if (cont == 1){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
 
-                                if(board[pt.x+2][pt.y]==1)  {
-                                    boardView[pt.x][pt.y]
-                                    boardView[pt.x][pt.y-1]
-                                    boardView[pt.x][pt.y+1]
-                                    boardView[pt.x+1][pt.y]
-
-                                    running = true
-                                    gerarPeca()
-                                    pt = Ponto(0,15)
-                                }
-
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-//                                running = true
-//                                gerarPeca()
-//                                pt = Ponto(0,15)
+                            if(board[pt.x+2][pt.y]==1 || board[pt.x+1][pt.y+1]==1 || board[pt.x+1][pt.y-1]==1) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x][pt.y - 1] = 1
+                                board[pt.x][pt.y + 1] = 1
+                                board[pt.x + 1][pt.y] = 1
+                                gerarPeca()
                             }
                         }else if(cont == 2){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
-                            }
-                        }else if(cont == 3){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
-                            }
-                        }else if(cont == 4){
                             cont = 0
                         }
                     }else if(peca == 2){
-                        try {
+                        boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                        boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                        boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                        boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
+
+                        if(board[pt.x+2][pt.y]==1 || board[pt.x+2][pt.y+1]==1 ) {
+                            board[pt.x][pt.y] = 1
+                            board[pt.x+1][pt.y] =1
+                            board[pt.x][pt.y-1]=1
+                            board[pt.x+1][pt.y-1]=1
+                            gerarPeca()
+                        }
+                    }else if(peca == 3){
+                        if(cont == 0){
                             boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
                             boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
                             boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                            boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
-                        }catch (e:ArrayIndexOutOfBoundsException ) {
-                            //se a peça passou das bordas eu vou parar o jogo
-                            running = true
-                            gerarPeca()
-                            pt = Ponto(0,15)
-                        }
+                            boardView[pt.x-1][pt.y-1]!!.setImageResource(R.drawable.white)
 
-                    }else if(peca == 3){
-                        if(cont == 0){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y-1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+                            if(board[pt.x+2][pt.y]==1 || board[pt.x+1][pt.y-1]==1) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x+1][pt.y] =1
+                                board[pt.x][pt.y-1] =1
+                                board[pt.x-1][pt.y-1] =1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
                         }else if(cont == 1){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
+
+                            if(board[pt.x+2][pt.y]==1 || board[pt.x+1][pt.y+1]==1 || board[pt.x+1][pt.y-1]==1) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x+1][pt.y] = 1
+                                board[pt.x][pt.y+1] = 1
+                                board[pt.x+1][pt.y-1] = 1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
                         }
                         else if(cont == 2){
@@ -263,28 +212,32 @@ class MainActivity : AppCompatActivity() {
 
                     }else if(peca == 4){
                         if(cont == 0){
-                            try {
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-2]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-2]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+
+                            if(board[pt.x+1][pt.y]==1 || board[pt.x+1][pt.y-1]==1 || board[pt.x+1][pt.y+1]==1 || board[pt.x+1][pt.y-2]==1 ) {
+                                board[pt.x][pt.y+1] = 1
+                                board[pt.x][pt.y-1] = 1
+                                board[pt.x][pt.y-2] = 1
+                                board[pt.x][pt.y] = 1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
+
                         }else if(cont == 1){
-                            try {
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-2][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+
+                            boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+2][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            if(board[pt.x+2][pt.y]==1) {
+                                board[pt.x+1][pt.y] = 1
+                                board[pt.x-2][pt.y] = 1
+                                board[pt.x-1][pt.y] = 1
+                                board[pt.x][pt.y] = 1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
                         }else if(cont == 2){
                             cont = 0
@@ -292,135 +245,98 @@ class MainActivity : AppCompatActivity() {
 
                     }else if(peca == 5){
                         if(cont == 0){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
-                            }
-                        }else if(cont == 1){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y-1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
 
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
+
+                            if(board[pt.x+1][pt.y]==1 || board[pt.x+1][pt.y+1]==1 || board[pt.x+2][pt.y-1]==1 ) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x][pt.y+1] = 1
+                                board[pt.x][pt.y-1] = 1
+                                board[pt.x+1][pt.y-1] = 1
+                                gerarPeca()
+                            }
+
+                        }else if(cont == 1){
+
+                            boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
+                            boardView[pt.x-1][pt.y-1]!!.setImageResource(R.drawable.white)
+
+                            if(board[pt.x+2][pt.y]==1 || board[pt.x][pt.y-1]==1) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x+1][pt.y] =1
+                                board[pt.x-1][pt.y] =1
+                                board[pt.x-1][pt.y-1] =1
+                                gerarPeca()
                             }
                         }else if(cont == 2){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y+1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
-                            }
-                        }else if ( cont == 3){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y+1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
-                            }
-                        }else if(cont == 4){
                             cont = 0
                         }
 
                     }else if(peca == 6){
                         if(cont == 0){
-                            try {
                                 boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x-1][pt.y-1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+
+                            if(board[pt.x+1][pt.y]==1 || board[pt.x+1][pt.y-1]==1 ||board[pt.x+1][pt.y+1]==1) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x][pt.y+1] =1
+                                board[pt.x][pt.y-1] =1
+                                board[pt.x-1][pt.y-1] =1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
                         }else if(cont ==1){
-                            try {
+
                                 boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x-1][pt.y+1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+
+                            if(board[pt.x+2][pt.y]==1 || board[pt.x][pt.y+1]==1 ) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x+1][pt.y] = 1
+                                board[pt.x-1][pt.y] = 1
+                                board[pt.x-1][pt.y+1] = 1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
-                        }else if(cont ==2){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y-1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y+1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
-                            }
-                        }else if(cont == 3){
-                            try {
-                                boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
-                                boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
-                                gerarPeca()
-                                pt = Ponto(0,15)
-                            }
-                        }else if(cont == 4){
+                        }else if(cont == 2){
                             cont = 0
                         }
 
                     }else if(peca == 7){
                         if(cont == 0){
-                            try {
+
                                 boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x-1][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x+1][pt.y+1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+
+                            if(board[pt.x+1][pt.y]==1 || board[pt.x+2][pt.y+1]==1 ) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x-1][pt.y] = 1
+                                board[pt.x][pt.y+1] = 1
+                                board[pt.x+1][pt.y+1] = 1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
                         }else if(cont == 1){
-                            try {
+
                                 boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x+1][pt.y]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x+1][pt.y-1]!!.setImageResource(R.drawable.white)
                                 boardView[pt.x][pt.y+1]!!.setImageResource(R.drawable.white)
-                            }catch (e:ArrayIndexOutOfBoundsException ) {
-                                //se a peça passou das bordas eu vou parar o jogo
-                                running = true
+
+                            if(board[pt.x+2][pt.y]==1 || board[pt.x+2][pt.y-1]==1 || board[pt.x][pt.y+1]==1 ) {
+                                board[pt.x][pt.y] = 1
+                                board[pt.x+1][pt.y] =1
+                                board[pt.x+1][pt.y-1] =1
+                                board[pt.x][pt.y+1] =1
                                 gerarPeca()
-                                pt = Ponto(0,15)
                             }
                         }else if(cont == 2){
                             cont = 0
@@ -435,16 +351,15 @@ class MainActivity : AppCompatActivity() {
 
         cont = 0
     }
-
-    override fun onStop() {
-        super.onStop()
-        val setting = getSharedPreferences(PREFS,Context.MODE_PRIVATE)
-        with((setting.edit())){
-            putInt("Recorde", recorde)
-            //putInt("pontos", null)
-        }
-
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        val setting = getSharedPreferences(PREFS,Context.MODE_PRIVATE)
+//        with((setting.edit())){
+//            putInt("Recorde", recorde)
+//            //putInt("pontos", null)
+//        }
+//
+//    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
